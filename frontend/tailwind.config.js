@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'wallpaper': "url('../public/wallpaper2.jpg')",
+       },
       fontFamily: {
         'Poppins': 'Poppins',
       },
