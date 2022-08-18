@@ -11,6 +11,7 @@ import GroupChatModal from './GroupChatModal'
 import { getSender, getSenderPic } from '../../config/ChatLogics'
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
+import ScrollableFeed from 'react-scrollable-feed'
 
 const Sidebar = ({ fetchAgain }) => {
   const { user, setSelectedChat, chats, setChats, notification, setNotification } = ChatState()
@@ -38,7 +39,7 @@ const Sidebar = ({ fetchAgain }) => {
           }
         }
 
-        const { data } = await axios.get(`/api/user?search=${search}`, config)
+        const { data } = await axios.get(process.env.REACT_APP_BACKEND_URL + `/api/user?search=${search}`, config)
 
         setLoading(false)
         setSearchResult(data)
@@ -63,7 +64,7 @@ const Sidebar = ({ fetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(process.env.REACT_APP_BACKEND_URL + `/api/chat`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -142,11 +143,16 @@ const Sidebar = ({ fetchAgain }) => {
         <input type="text" placeholder='Search...' onChange={e => setSearch(e.target.value)} className='px-9 text-sm py-2 w-[250px] bg-[#E8E8E8] rounded-3xl border-[#E8E8E8] border outline-none placeholder:text-[#C7C3C3]' />
       </div> {/* End of search */}
 
-      <div className="flex-1">
-        <MyChat fetchAgain={fetchAgain} loading={loading} search={search} searchResult={searchResult} handleFunction={accessChat} loadingChat={loadingChat} />
-      </div> {/* End of MyChat */}
+      <div className="h-[350px]">
+        <ScrollableFeed>
+          <div className="flex-1">
+            <MyChat fetchAgain={fetchAgain} loading={loading} search={search} searchResult={searchResult} handleFunction={accessChat} loadingChat={loadingChat} />
+          </div> {/* End of MyChat */}
+        </ScrollableFeed>
+      </div>
 
-      <div className="pb-5">
+      <hr />
+      <div className="pb-5 pt-3">
         <MyProfile />
       </div> {/* End of MyProfile */}
 

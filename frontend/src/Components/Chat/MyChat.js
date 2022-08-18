@@ -6,6 +6,7 @@ import UserListItem from '../User/UserListItem'
 import ChatListItem from './ChatListItem';
 import ChatLoading from './ChatLoading'
 
+
 const MyChat = ({ loading, searchResult, handleFunction, loadingChat, search, fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
   const [loggedUser, setLoggedUser] = useState();
@@ -19,7 +20,7 @@ const MyChat = ({ loading, searchResult, handleFunction, loadingChat, search, fe
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(process.env.REACT_APP_BACKEND_URL + "/api/chat", config);
       setFirstData(data)
       setChats(data);
     } catch (error) {
@@ -39,7 +40,7 @@ const MyChat = ({ loading, searchResult, handleFunction, loadingChat, search, fe
     <div>
       {
         search.length === 0 && chats ? chats.map((chat) => (
-          
+
           <ChatListItem
             loggedUser={loggedUser}
             key={chat._id}
