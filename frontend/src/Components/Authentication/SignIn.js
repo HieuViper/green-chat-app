@@ -34,7 +34,7 @@ const SignIn = () => {
       }
 
       const { data } = await axios.post(
-        "api/user/sign-in",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/sign-in",
         {email, password},
         config
       )

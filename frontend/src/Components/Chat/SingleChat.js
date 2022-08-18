@@ -9,11 +9,8 @@ import toast from 'react-hot-toast'
 import axios from 'axios'
 import ScrollableChat from './ScrollableChat'
 import io from 'socket.io-client'
-import Lottie from 'react-lottie';
-import animationData from '../../animation/typing/typing.json'
-import ScrollableFeed from 'react-scrollable-feed'
 
-const END_POINT = 'https://green-chating-application.herokuapp.com'
+const END_POINT = 'https://green-chating-application.herokuapp.com/'
 let socket, selectedChatCompare
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
@@ -49,7 +46,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          process.env.REACT_APP_BACKEND_URL + "/api/message",
           {
             content: newMessage,
             chatId: selectedChat,
@@ -101,7 +98,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        process.env.REACT_APP_BACKEND_URL + `/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -120,8 +117,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat
   }, [selectedChat])
 
-  
-  console.log(notification);
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {

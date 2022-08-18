@@ -21,7 +21,7 @@ const SignUp = () => {
       toast.error('Please upload your picture')
       return
     }
-    if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
+    if (pics.type === 'image/jpeg' || pics.type === 'image/png' || pics.type === 'image/jpg') {
       const data = new FormData()
       data.append("file", pics)
       data.append("upload_preset", "mern-chat-app")
@@ -76,7 +76,7 @@ const SignUp = () => {
       }
 
       const { data } = await axios.post(
-        "api/user/sign-up",
+        process.env.REACT_APP_BACKEND_URL + "/api/user/sign-up",
         {username, email, password, pic},
         config
       )
